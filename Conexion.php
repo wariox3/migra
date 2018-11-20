@@ -15,8 +15,6 @@ class Conexion
     {
         ini_set('display_errors', true);
         error_reporting(E_ALL);
-//        var_dump("hola");
-//        exit();
     }
 
     public function conexion1(){
