@@ -20,7 +20,8 @@ class Conexion
     public function conexion1(){
         try
         {
-            $bd = 'mysql:'.'localhost;'.'dbname=bdsos';
+
+            $bd = 'mysql:host=localhost;dbname=bdsos';
             $usuario = 'root';
             $contrasena = '123456';
             $conexion = new PDO($bd, $usuario, $contrasena);
@@ -30,7 +31,7 @@ class Conexion
 
         catch
         (PDOException $exception){
-            echo "Error: " . $exception->getMessage() . "<br/>";
+            return "Error: " . $exception->getMessage() . "<br/>";
         }
     }
 
@@ -39,10 +40,10 @@ class Conexion
 
         try
         {
-
+            $bd='mysql:host=localhost;dbname=bdcromo';
             $usuario = 'root';
             $contrasena = '123456';
-            $conexion = new PDO('mysql:localhost;dbname=bdcromo', $usuario, $contrasena);
+            $conexion = new PDO($bd, $usuario, $contrasena);
             $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $conexion;
         }

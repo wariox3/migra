@@ -18,10 +18,10 @@ class MigrarEmpleados{
 
     public function migrarEmpledos(){
         try{
-            require_once('Conexion.php');
+            require_once('../Conexion.php');
             $conexion = new Conexion();
             $vanadio=$conexion->conexion1();
-
+//            var_dump($vanadio);
             $columnas=array(
                 'codigo_identificacion_pk',
                 /*'codigo_ciudad_fk',*/
@@ -66,7 +66,7 @@ class MigrarEmpleados{
                 /*'codigo_cargo_fk'*/
             );
 
-            $datos=$vanadio->query("select
+            $datos=$vanadio->query('SELECT
                 numero_identificacion,
                 /*codigo_ciudad_fk,*/
                 codigo_clasificacion_riesgo_fk,
@@ -107,7 +107,7 @@ class MigrarEmpleados{
                 calzado, /*aparece con el nombre de talla_calzado en cromo*/
                 estatura,
                 peso
-                /*codigo_cargo_fk*/ from bdsos.rhu_empleado");
+                /*codigo_cargo_fk*/ FROM rhu_empleado');
             $datosAMigrar=[];
             foreach($datos as $row) {
                 $registro = [];
@@ -124,7 +124,7 @@ class MigrarEmpleados{
             var_dump($datosAMigrar);
             $vanadio = $conexion->cerrarConexion();
             $cromo  = $conexion->conexion2();
-            $migrarRegistros=$cromo->prepare("insert into bdcromo.rhu_empleado(
+            $migrarRegistros=$cromo->prepare("insert into rhu_empleado(
                 codigo_identificacion_fk,
                 /*codigo_ciudad_fk,*/
                 codigo_clasificacion_riesgo_fk,
@@ -173,12 +173,10 @@ class MigrarEmpleados{
 
             }
             $cromo = $conexion->cerrarConexion();
-//            $vanadio = $conexion->cerrarConexion();
-//            echo "realizado <br/>";
             return "ok";
         }
         catch (Exception $exception){
-            return"Error:{$exception->getMessage()}<br/>";
+            echo "Error:{$exception->getMessage()}<br/>";
         }
     }
 }
