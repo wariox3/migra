@@ -107,7 +107,7 @@ class MigrarEmpleados{
                 calzado, /*aparece con el nombre de talla_calzado en cromo*/
                 estatura,
                 peso
-                /*codigo_cargo_fk*/ FROM rhu_empleado');
+                /*codigo_cargo_fk*/ FROM rhu_empleado limit 1');
             $datosAMigrar=[];
             foreach($datos as $row) {
                 $registro = [];
