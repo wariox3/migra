@@ -20,7 +20,7 @@ class Conexion
     public function conexion1(){
         try
         {
-
+            $dotenv = new Dotenv\Dotenv('../');
             $bd = 'mysql:host=localhost;dbname=bdsos';
             $usuario = 'root';
             $contrasena = '123456';

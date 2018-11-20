@@ -6,11 +6,11 @@
  * Time: 11:36 AM
  */
 
-class MigrarEmpleados{
+class RhuEmpleados{
 
 
     /**
-     * MigrarEmpleados constructor.
+     * RhuEmpleados constructor.
      */
     public function __construct()
     {
@@ -18,13 +18,13 @@ class MigrarEmpleados{
 
     public function migrarEmpledos(){
         try{
-            require_once('../Conexion.php');
+            require_once('../../Conexion.php');
             $conexion = new Conexion();
             $vanadio=$conexion->conexion1();
-//            var_dump($vanadio);
             $columnas=array(
+                'codigo_empleado_pk',
                 'codigo_identificacion_pk',
-                /*'codigo_ciudad_fk',*/
+                'codigo_ciudad_fk',
                 'codigo_clasificacion_riesgo_fk',
                 'codigo_empleado_tipo_fk',
 //                'codigo_contrato_fk',
@@ -45,7 +45,6 @@ class MigrarEmpleados{
                 'telefono',
                 'celular',
                 'direccion',
-                /*'codigo_ciudad_fk',*/
                 'codigo_ciudad_expedicion_identificacion_fk',
                 'fecha_expedicion_identificacion',
                 'barrio',
@@ -54,7 +53,7 @@ class MigrarEmpleados{
                 'correo',
                 'fecha_nacimiento',
                 'cueta_tipo',
-                /*'codigo_ciudad_nacimiento_fk',*/
+                'codigo_ciudad_nacimiento_fk',
                 'codigo_estado_civil_fk',
                 'cuenta',
                 /*'codigo_banco_fk',*/
@@ -67,11 +66,12 @@ class MigrarEmpleados{
             );
 
             $datos=$vanadio->query('SELECT
+                codigo_empleado_pk,
                 numero_identificacion,
-                /*codigo_ciudad_fk,*/
+                codigo_ciudad_fk,
                 codigo_clasificacion_riesgo_fk,
-                codigo_empleado_tipo_fk,
-                /*codigo_contrato_fk,
+                /*codigo_empleado_tipo_fk,
+                codigo_contrato_fk,
                 codigo_cuenta_tipo_fk,*/
                 codigo_contrato_ultimo_fk,
                 numero_identificacion,
@@ -89,7 +89,6 @@ class MigrarEmpleados{
                 telefono,
                 celular,
                 direccion,
-                /*codigo_ciudad_fk,*/
                 codigo_ciudad_expedicion_fk, /*aparece con el nombre de codigo_ciudad_expedicion_identificacion_fk en cromo*/
                 fecha_expedicion_identificacion,
                 barrio,
@@ -98,7 +97,7 @@ class MigrarEmpleados{
                 correo,
                 fecha_nacimiento,
                 tipo_cuenta, /*aparece con el nombre de cuenta_tipo en cromo*/
-                /*codigo_ciudad_nacimiento_fk,*/
+                codigo_ciudad_nacimiento_fk,
                 codigo_estado_civil_fk,
                 cuenta,
                 /*codigo_banco_fk,*/
@@ -107,7 +106,7 @@ class MigrarEmpleados{
                 calzado, /*aparece con el nombre de talla_calzado en cromo*/
                 estatura,
                 peso
-                /*codigo_cargo_fk*/ FROM rhu_empleado limit 1');
+                /*codigo_cargo_fk*/ FROM rhu_empleado');
             $datosAMigrar=[];
             foreach($datos as $row) {
                 $registro = [];
@@ -124,8 +123,9 @@ class MigrarEmpleados{
             $vanadio = $conexion->cerrarConexion();
             $cromo  = $conexion->conexion2();
             $migrarRegistros=$cromo->prepare("insert into rhu_empleado(
+                codigo_empleado_pk,
                 codigo_identificacion_fk,
-                /*codigo_ciudad_fk,*/
+                codigo_ciudad_fk,
                 codigo_clasificacion_riesgo_fk,
                 codigo_empleado_tipo_fk,
                 /*codigo_contrato_fk,
@@ -146,7 +146,6 @@ class MigrarEmpleados{
                 telefono,
                 celular,
                 direccion,
-                /*codigo_ciudad_fk,*/
                 codigo_ciudad_expedicion_identificacion_fk,
                 fecha_expedicion_identificacion,
                 barrio,
@@ -155,7 +154,7 @@ class MigrarEmpleados{
                 correo,
                 fecha_nacimiento,
                 cueta_tipo,
-                /*codigo_ciudad_nacimiento_fk,*/
+                codigo_ciudad_nacimiento_fk,
                 codigo_estado_civil_fk,
                 cuenta,
                 /*codigo_banco_fk,*/
@@ -165,7 +164,7 @@ class MigrarEmpleados{
                 estatura,
                 peso
                 /*codigo_cargo_fk*/)
-                values(?,?,?,?,?,/*codigo_contrato_fk,codigo_cuenta_tipo_fk,*/?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             foreach ($datosAMigrar as $datosAMigr) {
 
                 $migrarRegistros->execute($datosAMigr);
