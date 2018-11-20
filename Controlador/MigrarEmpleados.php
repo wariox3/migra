@@ -121,7 +121,6 @@ class MigrarEmpleados{
                     array_push($datosAMigrar, $registro);
             }
 
-            var_dump($datosAMigrar);
             $vanadio = $conexion->cerrarConexion();
             $cromo  = $conexion->conexion2();
             $migrarRegistros=$cromo->prepare("insert into rhu_empleado(
@@ -173,10 +172,12 @@ class MigrarEmpleados{
 
             }
             $cromo = $conexion->cerrarConexion();
-            return "ok";
+            echo "ok";
+            die();
         }
         catch (Exception $exception){
             echo "Error:{$exception->getMessage()}<br/>";
+            die();
         }
     }
 }

@@ -31,7 +31,8 @@ class Conexion
 
         catch
         (PDOException $exception){
-            return "Error: " . $exception->getMessage() . "<br/>";
+            echo "Error: " . $exception->getMessage() . "<br/>";
+            die();
         }
     }
 
@@ -51,6 +52,7 @@ class Conexion
         catch
         (PDOException $exception){
             echo "Error: " . $exception->getMessage() . "<br/>";
+            die();
         }
     }
 
