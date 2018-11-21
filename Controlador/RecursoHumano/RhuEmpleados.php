@@ -65,7 +65,16 @@ class RhuEmpleados{
                 /*'codigo_cargo_fk'*/
             );
 
-            $datos=$vanadio->query('SELECT
+            $totalDatos=$vanadio->query("SELECT COUNT(*) as 'numeroRegistro' FROM rhu_empleado");
+            $totalDatos->execute();
+            $count=$totalDatos->fetchAll();
+            $aux=0;
+            if(!isset($count[0]['numeroRegistro'])){
+                $count=0;
+            }
+            while ($aux!==(int)$count) {
+                $limite = $aux + 1000;
+                $datos = $vanadio->query("SELECT
                 codigo_empleado_pk,
                 numero_identificacion,
                 codigo_ciudad_fk,
@@ -106,23 +115,22 @@ class RhuEmpleados{
                 calzado, /*aparece con el nombre de talla_calzado en cromo*/
                 estatura,
                 peso
-                /*codigo_cargo_fk*/ FROM rhu_empleado');
-            $datosAMigrar=[];
-            foreach($datos as $row) {
-                $registro = [];
+                /*codigo_cargo_fk*/ FROM rhu_empleado limit {$aux},{$limite}");
+                $datosAMigrar = [];
+                foreach ($datos as $row) {
+                    $registro = [];
                     for ($i = 0; $i < count($columnas); $i++) {
                         if (isset($row[$columnas[$i]])) {
                             array_push($registro, $row[$columnas[$i]]);
-                        } else{
+                        } else {
                             array_push($registro, null);
                         }
                     }
                     array_push($datosAMigrar, $registro);
-            }
+                }
 
-            $vanadio = $conexion->cerrarConexion();
-            $cromo  = $conexion->conexion2();
-            $migrarRegistros=$cromo->prepare("insert into rhu_empleado(
+                $cromo = $conexion->conexion2();
+                $migrarRegistros = $cromo->prepare("insert into rhu_empleado(
                 codigo_empleado_pk,
                 codigo_identificacion_fk,
                 codigo_ciudad_fk,
@@ -165,11 +173,14 @@ class RhuEmpleados{
                 peso
                 /*codigo_cargo_fk*/)
                 values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-            foreach ($datosAMigrar as $datosAMigr) {
+                foreach ($datosAMigrar as $datosAMigr) {
 
-                $migrarRegistros->execute($datosAMigr);
+                    $migrarRegistros->execute($datosAMigr);
 
+                }
             }
+
+            $vanadio = $conexion->cerrarConexion();
             $cromo = $conexion->cerrarConexion();
             echo "ok";
             die();

@@ -67,8 +67,16 @@ class RhuContrato{
                 'auxilio_transporte'
 
             );
-
-            $datos=$vanadio->query('SELECT
+            $totalDatos=$vanadio->query("SELECT COUNT(*) as 'numeroRegistro' FROM rhu_contrato");
+            $totalDatos->execute();
+            $count=$totalDatos->fetchAll();
+            $aux=0;
+            if(!isset($count[0]['numeroRegistro'])){
+                $count=0;
+            }
+            while ($aux!==(int)$count) {
+                $limite = $aux + 1000;
+                $datos = $vanadio->query("SELECT
                     codigo_contrato_pk,
                     /*codigo_contrato_tipo_fk,*/
                     /*codigo_contrato_clase_fk,*/
@@ -112,24 +120,23 @@ class RhuContrato{
                     codigo_centro_trabajo_fk,
                     codigo_sucursal_fk,
                     auxilio_transporte
-                 FROM rhu_contrato');
-            $datosAMigrar=[];
-            foreach($datos as $row) {
-                $registro = [];
-                for ($i = 0; $i < count($columnas); $i++) {
-                    if (isset($row[$columnas[$i]])) {
-                        array_push($registro, $row[$columnas[$i]]);
-                    } else{
-                        array_push($registro, null);
+                 FROM rhu_contrato limit {$aux},{$limite}");
+                $datosAMigrar = [];
+                foreach ($datos as $row) {
+                    $registro = [];
+                    for ($i = 0; $i < count($columnas); $i++) {
+                        if (isset($row[$columnas[$i]])) {
+                            array_push($registro, $row[$columnas[$i]]);
+                        } else {
+                            array_push($registro, null);
+                        }
                     }
+                    array_push($datosAMigrar, $registro);
                 }
-                array_push($datosAMigrar, $registro);
-            }
 
 
-            $vanadio = $conexion->cerrarConexion();
-            $cromo  = $conexion->conexion2();
-            $migrarRegistros=$cromo->prepare("insert into rhu_contrato(
+                $cromo = $conexion->conexion2();
+                $migrarRegistros = $cromo->prepare("insert into rhu_contrato(
                     codigo_contrato_pk,
                     /*codigo_contrato_tipo_fk,*/
                     /*codigo_contrato_clase_fk,*/
@@ -175,11 +182,13 @@ class RhuContrato{
                     auxilio_transporte
                 )
                 values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-            foreach ($datosAMigrar as $datosAMigr) {
+                foreach ($datosAMigrar as $datosAMigr) {
 
-                $migrarRegistros->execute($datosAMigr);
+                    $migrarRegistros->execute($datosAMigr);
 
+                }
             }
+            $vanadio = $conexion->cerrarConexion();
             $cromo = $conexion->cerrarConexion();
             echo "ok";
             die();

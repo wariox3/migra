@@ -26,10 +26,13 @@
         <a href="RhuContrato.php">Contratos</a>
     </li>
     <li >
-        <a href="#">Otras opciones</a>
+        <a href="RhuConcepto.php">Concepto</a>
     </li>
     <li >
-        <a href="#">Otras opciones</a>
+        <a href="RhuPago.php">Pago</a>
+    </li>
+    <li >
+        <a href="RhuPagoDetalle.php">Pago Detalle</a>
     </li>
 </ul>
 <table >
@@ -43,6 +46,15 @@
         <th>
             Contratos
         </th>
+        <th>
+            Concepto
+        </th>
+        <th>
+            Pago
+        </th>
+        <th>
+            Pago Detalle
+        </th>
     </tr>
     <tbody>
     <td>
@@ -53,6 +65,15 @@
     </td>
     <td>
         Empleados
+    </td>
+    <td>
+        Ninguna
+    </td>
+    <td>
+        Empleados, Contrato
+    </td>
+    <td>
+        Pago
     </td>
     </tbody>
 </table>
