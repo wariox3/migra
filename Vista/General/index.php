@@ -29,7 +29,7 @@
         <a href="GenCiudad.php" >Ciudad</a>
     </li>
     <li >
-        <a href="#">Otras opciones</a>
+        <a href="#">Otra opcion</a>
     </li>
 </ul>
 
