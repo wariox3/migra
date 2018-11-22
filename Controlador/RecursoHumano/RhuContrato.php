@@ -73,7 +73,11 @@ class RhuContrato{
             $aux=0;
             if(!isset($count[0]['numeroRegistro'])){
                 $count=0;
+            }else{
+
+                $count=$count[0]['numeroRegistro'];
             }
+
             while ($aux!==(int)$count) {
                 $limite = $aux + 1000;
                 $datos = $vanadio->query("SELECT
@@ -121,22 +125,25 @@ class RhuContrato{
                     codigo_sucursal_fk,
                     auxilio_transporte
                  FROM rhu_contrato limit {$aux},{$limite}");
-                $datosAMigrar = [];
-                foreach ($datos as $row) {
-                    $registro = [];
+                $value="";
+                foreach($datos as $row) {
+                    $aux++;
+                    $value="{$value}(";
                     for ($i = 0; $i < count($columnas); $i++) {
                         if (isset($row[$columnas[$i]])) {
-                            array_push($registro, $row[$columnas[$i]]);
-                        } else {
-                            array_push($registro, null);
+                            $value="{$value}'{$row[$columnas[$i]]}',";
+                        } else{
+                            $value="{$value}null,";
                         }
                     }
-                    array_push($datosAMigrar, $registro);
-                }
+                    $value=substr($value,0,-1);
+                    $value="{$value}),";
 
+                }
+                $value=substr($value,0,-1);
 
                 $cromo = $conexion->conexion2();
-                $migrarRegistros = $cromo->prepare("insert into rhu_contrato(
+                $migrarRegistros = $cromo->query("insert into rhu_contrato(
                     codigo_contrato_pk,
                     /*codigo_contrato_tipo_fk,*/
                     /*codigo_contrato_clase_fk,*/
@@ -181,12 +188,7 @@ class RhuContrato{
                     codigo_sucursal_fk,
                     auxilio_transporte
                 )
-                values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-                foreach ($datosAMigrar as $datosAMigr) {
-
-                    $migrarRegistros->execute($datosAMigr);
-
-                }
+                values {$value}");
             }
             $vanadio = $conexion->cerrarConexion();
             $cromo = $conexion->cerrarConexion();

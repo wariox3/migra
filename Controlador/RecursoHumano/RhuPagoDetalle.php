@@ -45,7 +45,11 @@ class RhuPagoDetalle{
             $aux=0;
             if(!isset($count[0]['numeroRegistro'])){
                 $count=0;
+            }else{
+
+            $count=$count[0]['numeroRegistro'];
             }
+
             while ($aux!==(int)$count) {
                 $limite=$aux+1000;
                 $datos = $vanadio->query("SELECT
@@ -66,22 +70,26 @@ class RhuPagoDetalle{
                 vr_ingreso_base_cotizacion,
                 vr_ingreso_base_prestacion
                  FROM rhu_pago_detalle limit {$aux},{$limite}");
-                $datosAMigrar = [];
-                    foreach ($datos as $row) {
-                        $aux++;
-                        $registro = [];
-                        for ($i = 0; $i < count($columnas); $i++) {
-                            if (isset($row[$columnas[$i]])) {
-                                array_push($registro, $row[$columnas[$i]]);
-                            } else {
-                                array_push($registro, null);
-                            }
+                $value="";
+                foreach($datos as $row) {
+                    $aux++;
+                    $value="{$value}(";
+                    for ($i = 0; $i < count($columnas); $i++) {
+                        if (isset($row[$columnas[$i]])) {
+                            $value="{$value}'{$row[$columnas[$i]]}',";
+                        } else{
+                            $value="{$value}null,";
                         }
-                        array_push($datosAMigrar, $registro);
                     }
+                    $value=substr($value,0,-1);
+                    $value="{$value}),";
 
+                }
+
+                $value=substr($value,0,-1);
                 $cromo = $conexion->conexion2();
-                $migrarRegistros = $cromo->prepare("insert into rhu_pago_detalle(
+                if($value!="") {
+                    $cromo->query("insert into rhu_pago_detalle(
                 codigo_pago_detalle_pk,
                 codigo_pago_fk,
                 codigo_concepto_fk,
@@ -99,13 +107,9 @@ class RhuPagoDetalle{
                 vr_ingreso_base_cotizacion,
                 vr_ingreso_base_prestacion
                 )
-                values(?,?,?,?,?,?,?,?,?,?,?,?,?)");
-                foreach ($datosAMigrar as $datosAMigr) {
-
-                    $migrarRegistros->execute($datosAMigr);
-
+                values {$value}");
                 }
-                $datos="";
+
             }
             $vanadio = $conexion->cerrarConexion();
             $cromo = $conexion->cerrarConexion();
