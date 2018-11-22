@@ -34,7 +34,7 @@ class RhuPagoDetalle{
                 'porcentaje_aplicado',
                 'numero_dias',
                 'detalle',
-//                'vr_deduccion', //no existe o se desconoce el nombre en vanadio
+///                'vr_deduccion', //no existe o se desconoce el nombre en vanadio
 //                'vr_devengado', //no existe o se desconoce el nombre en vanadio
                 'vr_ingreso_base_cotizacion',
                 'vr_ingreso_base_prestacion'
