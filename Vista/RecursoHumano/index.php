@@ -20,6 +20,9 @@
         <a href="../../index.php" >Volver</a>
     </li>
     <li >
+        <a href="RhuGrupo.php" >Grupo</a>
+    </li>
+    <li >
         <a href="RhuEmpleado.php" >Empleados</a>
     </li>
     <li >
@@ -39,6 +42,9 @@
     <tr>
         <th>
 
+        </th>
+        <th>
+            Grupo
         </th>
         <th>
             Empleados
@@ -61,10 +67,13 @@
         Dependencia
     </td>
     <td>
+        Ninguna
+    </td>
+    <td>
         Ciudad
     </td>
     <td>
-        Empleados
+        Grupo, Empleados
     </td>
     <td>
         Ninguna

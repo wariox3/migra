@@ -35,33 +35,38 @@ class GenDepartamento{
                   codigo_pais_fk,
                   codigo_dane
                  FROM gen_departamento');
-            $datosAMigrar=[];
+            $value="";
             foreach($datos as $row) {
-                $registro = [];
+                $value="{$value}(";
                 for ($i = 0; $i < count($columnas); $i++) {
                     if (isset($row[$columnas[$i]])) {
-                        array_push($registro, $row[$columnas[$i]]);
+                        if(is_numeric($row[$columnas[$i]])){
+                            $value="{$value}{$row[$columnas[$i]]},";
+                        }
+                        else if(is_string($row[$columnas[$i]])){
+                            $value="{$value}'{$row[$columnas[$i]]}',";
+
+                        }
                     } else{
-                        array_push($registro, null);
+                        $value="{$value}null,";
                     }
                 }
-                array_push($datosAMigrar, $registro);
-            }
+                $value=substr($value,0,-1);
+                $value="{$value}),";
 
+            }
+            $value=substr($value,0,-1);
 
             $vanadio = $conexion->cerrarConexion();
             $cromo  = $conexion->conexion2();
-            $migrarRegistros=$cromo->prepare("insert into gen_departamento(
+            if($value!=""){
+                $cromo->query("insert into gen_departamento(
                   codigo_departamento_pk,
                   nombre,
                   codigo_pais_fk,
                   codigo_dane
                 )
-                values(?,?,?,?)");
-            foreach ($datosAMigrar as $datosAMigr) {
-
-                $migrarRegistros->execute($datosAMigr);
-
+                values {$value}");
             }
             $cromo = $conexion->cerrarConexion();
             echo "ok";

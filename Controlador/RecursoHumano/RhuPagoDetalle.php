@@ -76,7 +76,13 @@ class RhuPagoDetalle{
                     $value="{$value}(";
                     for ($i = 0; $i < count($columnas); $i++) {
                         if (isset($row[$columnas[$i]])) {
-                            $value="{$value}'{$row[$columnas[$i]]}',";
+                            if(is_numeric($row[$columnas[$i]])){
+                                $value="{$value}{$row[$columnas[$i]]},";
+                            }
+                            else if(is_string($row[$columnas[$i]])){
+                                $value="{$value}'{$row[$columnas[$i]]}',";
+
+                            }
                         } else{
                             $value="{$value}null,";
                         }

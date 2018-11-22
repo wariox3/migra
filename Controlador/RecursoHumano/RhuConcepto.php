@@ -83,7 +83,13 @@ class RhuConcepto{
                     $value="{$value}(";
                     for ($i = 0; $i < count($columnas); $i++) {
                         if (isset($row[$columnas[$i]])) {
-                            $value="{$value}'{$row[$columnas[$i]]}',";
+                            if(is_numeric($row[$columnas[$i]])){
+                                $value="{$value}{$row[$columnas[$i]]},";
+                            }
+                            else if(is_string($row[$columnas[$i]])){
+                                $value="{$value}'{$row[$columnas[$i]]}',";
+
+                            }
                         } else{
                             $value="{$value}null,";
                         }
@@ -96,7 +102,8 @@ class RhuConcepto{
 
 
                 $cromo = $conexion->conexion2();
-                $migrarRegistros = $cromo->query("insert into rhu_concepto(
+                if($value!=""){
+                    $cromo->query("insert into rhu_concepto(
                 codigo_concepto_pk,
                 nombre,
                 /*porcentaje,*/
@@ -118,6 +125,7 @@ class RhuConcepto{
                 fondo_solidaridad_pensional
                 )
                 values {$value}");
+                }
             }
             $vanadio = $conexion->cerrarConexion();
             $cromo = $conexion->cerrarConexion();

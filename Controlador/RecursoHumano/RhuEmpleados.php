@@ -26,10 +26,10 @@ class RhuEmpleados{
                 'codigo_identificacion_pk',
                 'codigo_ciudad_fk',
                 'codigo_clasificacion_riesgo_fk',
-                'codigo_empleado_tipo_fk',
-//                'codigo_contrato_fk',
-//                'codigo_cuenta_tipo_fk',
+//                'codigo_empleado_tipo_fk',
+                'codigo_contrato_activo_fk',
                 'codigo_contrato_ultimo_fk',
+//                'codigo_cuenta_tipo_fk',
                 'numero_identificacion',
                 'discapacidad',
                 'estado_contrato_activo',
@@ -83,10 +83,10 @@ class RhuEmpleados{
                 numero_identificacion,
                 codigo_ciudad_fk,
                 codigo_clasificacion_riesgo_fk,
-                /*codigo_empleado_tipo_fk,
-                codigo_contrato_fk,
-                codigo_cuenta_tipo_fk,*/
+                /*codigo_empleado_tipo_fk,*/
+                codigo_contrato_activo_fk,
                 codigo_contrato_ultimo_fk,
+                /*codigo_cuenta_tipo_fk,*/
                 numero_identificacion,
                 discapacidad,
                 estado_contrato_activo, /*aparece con el nombre de estado_contracto en cromo*/
@@ -126,7 +126,13 @@ class RhuEmpleados{
                     $value="{$value}(";
                     for ($i = 0; $i < count($columnas); $i++) {
                         if (isset($row[$columnas[$i]])) {
-                            $value="{$value}'{$row[$columnas[$i]]}',";
+                            if(is_numeric($row[$columnas[$i]])){
+                            $value="{$value}{$row[$columnas[$i]]},";
+                            }
+                            else if(is_string($row[$columnas[$i]])){
+                                $value="{$value}'{$row[$columnas[$i]]}',";
+
+                            }
                         } else{
                             $value="{$value}null,";
                         }
@@ -138,15 +144,16 @@ class RhuEmpleados{
                 $value=substr($value,0,-1);
 
                 $cromo = $conexion->conexion2();
-                $migrarRegistros = $cromo->query("insert into rhu_empleado(
+                if($value!=""){
+                    $migrarRegistros = $cromo->query("insert into rhu_empleado(
                 codigo_empleado_pk,
                 codigo_identificacion_fk,
                 codigo_ciudad_fk,
                 codigo_clasificacion_riesgo_fk,
-                codigo_empleado_tipo_fk,
-                /*codigo_contrato_fk,
-                codigo_cuenta_tipo_fk,*/
+                /*codigo_empleado_tipo_fk,*/
+                codigo_contrato_fk,
                 codigo_contrato_ultimo_fk,
+                /*codigo_cuenta_tipo_fk,*/
                 numero_identificacion,
                 discapacidad,
                 estado_contrato,
@@ -181,6 +188,8 @@ class RhuEmpleados{
                 peso
                 /*codigo_cargo_fk*/)
                 values {$value}");
+                }
+
             }
 
             $vanadio = $conexion->cerrarConexion();

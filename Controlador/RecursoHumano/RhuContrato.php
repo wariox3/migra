@@ -44,7 +44,7 @@ class RhuContrato{
                 'estado_terminado',
                 'indefinido',
 //                'comentario_terminacion', //no existe el campo, pero si una fk codigo_motivo_terminacion_contrato_fk
-//                'codigo_grupo_fk', //no existe el campo, pero si una fk codigo_contrato_grupo_fk
+                'codigo_centro_costo_fk',
                 'fecha_ultimo_pago_cesantias',
                 'fecha_ultimo_pago_vacaciones',
                 'fecha_ultimo_pago_primas',
@@ -103,7 +103,7 @@ class RhuContrato{
                     estado_terminado,
                     indefinido,
                     /*comentario_terminacion,*/
-                    /*codigo_grupo_fk,*/
+                    codigo_centro_costo_fk,
                     fecha_ultimo_pago_cesantias,
                     fecha_ultimo_pago_vacaciones,
                     fecha_ultimo_pago_primas,
@@ -131,7 +131,13 @@ class RhuContrato{
                     $value="{$value}(";
                     for ($i = 0; $i < count($columnas); $i++) {
                         if (isset($row[$columnas[$i]])) {
-                            $value="{$value}'{$row[$columnas[$i]]}',";
+                            if(is_numeric($row[$columnas[$i]])){
+                                $value="{$value}{$row[$columnas[$i]]},";
+                            }
+                            else if(is_string($row[$columnas[$i]])){
+                                $value="{$value}'{$row[$columnas[$i]]}',";
+
+                            }
                         } else{
                             $value="{$value}null,";
                         }
@@ -143,7 +149,8 @@ class RhuContrato{
                 $value=substr($value,0,-1);
 
                 $cromo = $conexion->conexion2();
-                $migrarRegistros = $cromo->query("insert into rhu_contrato(
+                if($value!=""){
+                    $cromo->query("insert into rhu_contrato(
                     codigo_contrato_pk,
                     /*codigo_contrato_tipo_fk,*/
                     /*codigo_contrato_clase_fk,*/
@@ -166,7 +173,7 @@ class RhuContrato{
                     estado_terminado,
                     indefinido,
                     /*comentario_terminacion,*/
-                    /*codigo_grupo_fk,*/
+                    codigo_grupo_fk,
                     fecha_ultimo_pago_cesantias,
                     fecha_ultimo_pago_vacaciones,
                     fecha_ultimo_pago_primas,
@@ -189,6 +196,7 @@ class RhuContrato{
                     auxilio_transporte
                 )
                 values {$value}");
+                }
             }
             $vanadio = $conexion->cerrarConexion();
             $cromo = $conexion->cerrarConexion();

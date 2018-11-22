@@ -86,7 +86,13 @@ class RhuPago{
                     $value="{$value}(";
                     for ($i = 0; $i < count($columnas); $i++) {
                         if (isset($row[$columnas[$i]])) {
-                            $value="{$value}'{$row[$columnas[$i]]}',";
+                            if(is_numeric($row[$columnas[$i]])){
+                                $value="{$value}{$row[$columnas[$i]]},";
+                            }
+                            else if(is_string($row[$columnas[$i]])){
+                                $value="{$value}'{$row[$columnas[$i]]}',";
+
+                            }
                         } else{
                             $value="{$value}null,";
                         }
@@ -99,7 +105,8 @@ class RhuPago{
 
 
                 $cromo = $conexion->conexion2();
-                $migrarRegistros = $cromo->query("insert into rhu_pago(
+                if($value!=""){
+                    $cromo->query("insert into rhu_pago(
                 codigo_pago_pk,
                 /*codigo_pago_tipo_fk,*/
                 /*codigo_entidad_salud_fk,
@@ -123,6 +130,7 @@ class RhuPago{
                 usuario
                 )
                 values {$value}");
+                }
             }
             $vanadio = $conexion->cerrarConexion();
             $cromo = $conexion->cerrarConexion();

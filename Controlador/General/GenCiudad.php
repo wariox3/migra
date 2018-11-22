@@ -39,7 +39,13 @@ class GenCiudad{
                 $value="{$value}(";
                 for ($i = 0; $i < count($columnas); $i++) {
                     if (isset($row[$columnas[$i]])) {
-                        $value="{$value}'{$row[$columnas[$i]]}',";
+                        if(is_numeric($row[$columnas[$i]])){
+                            $value="{$value}{$row[$columnas[$i]]},";
+                        }
+                        else if(is_string($row[$columnas[$i]])){
+                            $value="{$value}'{$row[$columnas[$i]]}',";
+
+                        }
                     } else{
                         $value="{$value}null,";
                     }
@@ -52,7 +58,6 @@ class GenCiudad{
 
             $vanadio = $conexion->cerrarConexion();
             $cromo  = $conexion->conexion2();
-            echo($value);
             $migrarRegistros=$cromo->query("insert into gen_ciudad(
                   codigo_ciudad_pk,
                 nombre,
