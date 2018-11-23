@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: alexander
  * Date: 15/11/18
  * Time: 11:27 AM
  */
+        require ("vendor/autoload.php");
 class Conexion
 {
 
@@ -13,9 +15,6 @@ class Conexion
      */
     public function __construct()
     {
-        ini_set('display_errors', true);
-        error_reporting(E_ALL);
-        require "vendor/autoload.php";
         $dotenv = new Dotenv\Dotenv(__DIR__);
         $dotenv->load();
     }
@@ -80,7 +79,6 @@ class Conexion
         catch
         (PDOException $exception){
             echo "Error: " . $exception->getMessage() . "<br/>";
-            die();
         }
     }
 
@@ -106,7 +104,6 @@ class Conexion
         catch
         (PDOException $exception){
             echo "Error: " . $exception->getMessage() . "<br/>";
-            die();
         }
     }
 

@@ -6,6 +6,7 @@
  * Time: 15:02 PM
  */
 
+            require_once('../../Conexion.php');
 class RhuContrato{
 
 
@@ -16,22 +17,23 @@ class RhuContrato{
     {
     }
 
+
+
     public function migrarContratos(){
         try{
-            require_once('../../Conexion.php');
             $conexion = new Conexion();
             $vanadio=$conexion->conexion1();
             $columnas=array(
                 'codigo_contrato_pk',
                 'codigo_contrato_tipo_externo',
                 'codigo_contrato_clase_externo',
-//                'codigo_clasificacion_riesgo_fk', //tabla con referencia (relacion)
+                'codigo_clasificacion_riesgo_externo',
 //                'codigo_contrato_motivo_fk', //no existe en vanadio o no se conoce el nombre de referecia en vanadio
                 'fecha',
 //                'codigo_tiempo_fk', //no existe en vanadio o no se conoce el nombre de referecia en vanadio
                 'factor_horas_dia',
-//                'codigo_pension_fk', //no existe en vanadio o no se conoce el nombre de referecia en vanadio
-//                'codigo_salud_fk', //no existe en vanadio o no se conoce el nombre de referecia en vanadio
+                'codigo_tipo_pension_externo',
+                'codigo_tipo_salud_externo',
                 'codigo_empleado_fk',
                 'fecha_desde',
                 'fecha_hasta',
@@ -84,13 +86,13 @@ class RhuContrato{
                     codigo_contrato_pk,
                     rhu_contrato_tipo.codigo_externo as codigo_contrato_tipo_externo,
                     rhu_contrato_clase.codigo_externo as codigo_contrato_clase_externo,
-                    /*codigo_clasificacion_riesgo_fk,*/
+                    rhu_clasificacion_riesgo.codigo_externo as codigo_clasificacion_riesgo_externo,
                     /*codigo_contrato_motivo_fk,*/
                     fecha,
                     /*codigo_tiempo_fk,*/
                     factor_horas_dia,
-                    /*codigo_pension_fk,*/
-                    /*codigo_salud_fk,*/
+                    rhu_tipo_pension.codigo_externo as codigo_tipo_pension_externo,
+                    rhu_tipo_salud.codigo_externo as codigo_tipo_salud_externo,
                     codigo_empleado_fk,
                     fecha_desde,
                     fecha_hasta,
@@ -127,6 +129,9 @@ class RhuContrato{
                  FROM rhu_contrato 
                   left join rhu_contrato_tipo on rhu_contrato.codigo_contrato_tipo_fk = rhu_contrato_tipo.codigo_contrato_tipo_pk
                   left join rhu_contrato_clase on rhu_contrato_clase.codigo_contrato_clase_pk=rhu_contrato.codigo_contrato_clase_fk
+                  left join rhu_clasificacion_riesgo on rhu_clasificacion_riesgo.codigo_clasificacion_riesgo_pk=rhu_contrato.codigo_clasificacion_riesgo_fk
+                  left join rhu_tipo_pension on rhu_tipo_pension.codigo_tipo_pension_pk=rhu_contrato.codigo_tipo_pension_fk
+                  left join rhu_tipo_salud on rhu_tipo_salud.codigo_tipo_salud_pk=rhu_contrato.codigo_tipo_salud_fk
                   limit {$aux},{$limite}");
                 $value="";
                 foreach($datos as $row) {
@@ -157,13 +162,13 @@ class RhuContrato{
                     codigo_contrato_pk,
                     codigo_contrato_tipo_fk,
                     codigo_contrato_clase_fk,
-                    /*codigo_clasificacion_riesgo_fk,*/
+                    codigo_clasificacion_riesgo_fk,
                     /*codigo_contrato_motivo_fk,*/
                     fecha,
                     /*codigo_tiempo_fk,*/
                     factor_horas_dia,
-                    /*codigo_pension_fk,*/
-                    /*codigo_salud_fk,*/
+                    codigo_pension_fk,
+                    codigo_salud_fk,
                     codigo_empleado_fk,
                     fecha_desde,
                     fecha_hasta,
