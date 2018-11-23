@@ -69,18 +69,18 @@
         </th>
     </tr>
     <tbody>
-    <td>
+    <th>
         Dependencia
-    </td>
+    </th>
     <td>
         Ninguna
     </td>
     <td>
         Ciudad
     </td>
-    <th>
+    <td>
         Contratos clase
-    </th>
+    </td>
     <td>
         Grupo, Contrato tipo Empleados
     </td>
