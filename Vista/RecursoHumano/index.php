@@ -12,9 +12,7 @@
         padding: 8px;
     }
 
-    tr:nth-child(even) {
-        background-color: #dddddd;
-    }
+
 </style>
 <ul >
     <li >
@@ -39,54 +37,65 @@
         <a href="RhuPagoDetalle.php">Pago detalle</a>
     </li>
 </ul>
-<table >
+<table>
     <tr>
         <th>
-
+            Modelo
         </th>
         <th>
-            Grupo
-        </th>
-        <th>
-            Empleados
-        </th>
-        <th>
-            Contratos
-        </th>
-        <th>
-            Concepto
-        </th>
-        <th>
-            Pago
-        </th>
-        <th>
-            Pago Detalle
+            Dependencias
         </th>
     </tr>
-    <tbody>
-    <th>
-        Dependencia
-    </th>
-    <td>
-        Ninguna
-    </td>
-    <td>
-        Ciudad
-    </td>
-    <td>
-        Grupo, Empleados
-    </td>
-    <td>
-        Ninguna
-    </td>
-    <td>
-        Empleados, Contrato
-    </td>
-    <td>
-        Pago
-    </td>
-    </tbody>
+    <tr>
+        <td>
+            Grupo
+        </td>
+        <td>
+            Ninguna
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Empleados
+        </td>
+        <td>
+            Ciudad
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Contratos
+        </td>
+        <td>
+            Grupo,Contrato Tipo, Contrato Clase,Clasificacion Riesgo, Pension, Salud ,Empleados
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Concepto
+        </td>
+        <td>
+            Ninguna
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Pago
+        </td>
+        <td>
+            Empleados, Contrato
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Pago Detalle
+        </td>
+        <td>
+            Pago
+        </td>
+    </tr>
 </table>
+
 <?php
 ini_set('display_errors', true);
 error_reporting(E_ALL);
