@@ -23,8 +23,8 @@ class RhuContrato{
             $vanadio=$conexion->conexion1();
             $columnas=array(
                 'codigo_contrato_pk',
-                'codigo_contrato_tipo_fk',
-                'codigo_externo',
+                'codigo_contrato_tipo_externo',
+                'codigo_contrato_clase_externo',
 //                'codigo_clasificacion_riesgo_fk', //tabla con referencia (relacion)
 //                'codigo_contrato_motivo_fk', //no existe en vanadio o no se conoce el nombre de referecia en vanadio
                 'fecha',
@@ -82,8 +82,8 @@ class RhuContrato{
                 $limite = $aux + 1000;
                 $datos = $vanadio->query("SELECT
                     codigo_contrato_pk,
-                    codigo_contrato_tipo_fk,
-                    rhu_contrato_clase.codigo_externo as codigo_externo,
+                    rhu_contrato_tipo.codigo_externo as codigo_contrato_tipo_externo,
+                    rhu_contrato_clase.codigo_externo as codigo_contrato_clase_externo,
                     /*codigo_clasificacion_riesgo_fk,*/
                     /*codigo_contrato_motivo_fk,*/
                     fecha,
@@ -125,7 +125,8 @@ class RhuContrato{
                     codigo_sucursal_fk,
                     auxilio_transporte
                  FROM rhu_contrato 
-                  inner join rhu_contrato_clase on rhu_contrato_clase.codigo_contrato_clase_pk=rhu_contrato.codigo_contrato_clase_fk
+                  left join rhu_contrato_tipo on rhu_contrato.codigo_contrato_tipo_fk = rhu_contrato_tipo.codigo_contrato_tipo_pk
+                  left join rhu_contrato_clase on rhu_contrato_clase.codigo_contrato_clase_pk=rhu_contrato.codigo_contrato_clase_fk
                   limit {$aux},{$limite}");
                 $value="";
                 foreach($datos as $row) {
