@@ -118,7 +118,7 @@ group by codigo_tipo_pension_fk");
         $pensionUsado=$pensionUsado->fetchAll();
         foreach ($pensionUsado as $sinCodigoExterno){
             if($sinCodigoExterno['codigo_externo']===null){
-                echo "- Pension {$sinCodigoExterno['codigo_pension_tipo_fk']} no tiene codigo externo y es usado <br/>";
+                echo "- Pension {$sinCodigoExterno['codigo_tipo_pension_fk']} no tiene codigo externo y es usado <br/>";
             } else {
                 $pensionDestino=$cromo->query("SELECT codigo_pension_pk
               FROM rhu_pension
@@ -146,7 +146,7 @@ group by codigo_tipo_salud_fk");
         $saludUsado=$saludUsado->fetchAll();
         foreach ($saludUsado as $sinCodigoExterno){
             if($sinCodigoExterno['codigo_externo']===null){
-                echo "- Salud {$sinCodigoExterno['codigo_salud_tipo_fk']} no tiene codigo externo y es usado <br/>";
+                echo "- Salud {$sinCodigoExterno['codigo_tipo_salud_fk']} no tiene codigo externo y es usado <br/>";
             } else {
                 $saludDestino=$cromo->query("SELECT codigo_salud_pk
               FROM rhu_salud

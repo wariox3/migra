@@ -52,7 +52,7 @@ class RhuContrato{
                 'fecha_ultimo_pago_primas',
                 'fecha_ultimo_pago',
                 'codigo_tipo_cotizante_fk',
-                /*'codigo_subtipo_cotizante_fk',*/ //tabla con referencia (relacion)
+                'codigo_subtipo_cotizante_fk', //tabla con referencia (relacion)
                 'salario_integral',
 //                'costo_tipo_fk', //no existe en vanadio o no se conoce el nombre de referecia en vanadio
 //                'codigo_entidad_salud_fk', //tabla con referencia (relacion)
@@ -111,7 +111,7 @@ class RhuContrato{
                     fecha_ultimo_pago_primas,
                     fecha_ultimo_pago,
                     codigo_tipo_cotizante_fk,
-                    /*codigo_subtipo_cotizante_fk,*/
+                    codigo_subtipo_cotizante_fk,
                     salario_integral,
                     /*costo_tipo_fk,*/
                     /*codigo_entidad_salud_fk,
@@ -187,7 +187,7 @@ class RhuContrato{
                     fecha_ultimo_pago_primas,
                     fecha_ultimo_pago,
                     codigo_tipo_cotizante_fk,
-                    /*codigo_subtipo_cotizante_fk,*/
+                    codigo_subtipo_cotizante_fk,
                     salario_integral,
                     /*costo_tipo_fk,*/
                     /*codigo_entidad_salud_fk,
