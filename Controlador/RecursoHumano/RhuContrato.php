@@ -57,7 +57,7 @@ class RhuContrato{
 //                'costo_tipo_fk', //no existe en vanadio o no se conoce el nombre de referecia en vanadio
                 'codigo_entidad_salud_externo', //tabla con referencia (relacion)
                 'codigo_entidad_pension_externo', //tabla con referencia (relacion)
-                'codigo_entidad_cesantia_externo',
+                /*'codigo_entidad_cesantia_externo',*/
                 'codigo_entidad_caja_externo', //tabla con referencia (relacion)
                 'codigo_ciudad_contrato_fk',
                 'codigo_ciudad_labora_fk',
@@ -73,7 +73,7 @@ class RhuContrato{
             $columnasCodigosInterface=[
                 'codigo_entidad_salud_externo', //tabla con referencia (relacion)
                 'codigo_entidad_pension_externo', //tabla con referencia (relacion)
-                'codigo_entidad_cesantia_externo',
+                /*'codigo_entidad_cesantia_externo',*/
                 'codigo_entidad_caja_externo',
             ];
 
@@ -125,10 +125,10 @@ class RhuContrato{
                     codigo_subtipo_cotizante_fk,
                     salario_integral,
                     /*costo_tipo_fk,*/
-                    rhu_entidad_salud.codigo_externo as codigo_entidad_salud_externo,
-                    rhu_entidad_pension.codigo_externo as codigo_entidad_pension_externo,
-                    rhu_entidad_cesantia.codigo_externo as codigo_entidad_cesantia_externo,
-                    rhu_entidad_caja.codigo_externo as codigo_entidad_caja_externo,
+                    rhu_entidad_salud.codigo_interface as codigo_entidad_salud_externo,
+                    rhu_entidad_pension.codigo_interface as codigo_entidad_pension_externo,
+                    /*rhu_entidad_cesantia.codigo_externo as codigo_entidad_cesantia_externo,*/
+                    rhu_entidad_caja.codigo_interface as codigo_entidad_caja_externo,
                     codigo_ciudad_contrato_fk,
                     codigo_ciudad_labora_fk,
                     /*codigo_costo_clase_fk,*/
@@ -218,7 +218,7 @@ class RhuContrato{
                     /*costo_tipo_fk,*/
                     codigo_entidad_salud_fk,
                     codigo_entidad_pension_fk,
-                    codigo_entidad_cesantia_fk,
+                    /*codigo_entidad_cesantia_fk,*/
                     codigo_entidad_caja_fk,
                     codigo_ciudad_contrato_fk,
                     codigo_ciudad_labora_fk,

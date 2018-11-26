@@ -106,7 +106,7 @@ $validacion->validarContratoClase();
 $validacion->validarClasificacionRiesgo();
 $validacion->validarPension();
 $validacion->validarSalud();
-$validacion->validarEntidadCesantia();
+//$validacion->validarEntidadCesantia();
 $validacion->validarEntidadSalud();
 $validacion->validarEntidadPension();
 $validacion->validarEntidadCaja();
