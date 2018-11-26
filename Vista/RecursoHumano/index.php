@@ -31,6 +31,9 @@
         <a href="RhuConcepto.php">Concepto</a>
     </li>
     <li >
+        <a href="RhuAdicional.php">Adicional</a>
+    </li>
+    <li >
         <a href="RhuPago.php">Pago</a>
     </li>
     <li >
@@ -76,6 +79,14 @@
         </td>
         <td>
             Ninguna
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Adicional
+        </td>
+        <td>
+            Contrato, Empleado, Concepto
         </td>
     </tr>
     <tr>
