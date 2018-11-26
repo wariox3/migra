@@ -80,7 +80,6 @@ group by codigo_contrato_clase_fk");
         $conexion = new Conexion();
         $vanadio=$conexion->conexion1();
         $cromo=$conexion->conexion2();
-        //Validar contrato clase
         $contratoClasificacionRiesgoUsado=$vanadio->query("SELECT codigo_clasificacion_riesgo_fk, codigo_externo  
 FROM rhu_contrato 
 left join rhu_clasificacion_riesgo on rhu_contrato.codigo_clasificacion_riesgo_fk=rhu_clasificacion_riesgo.codigo_clasificacion_riesgo_pk 
@@ -108,7 +107,6 @@ group by codigo_clasificacion_riesgo_fk");
         $conexion = new Conexion();
         $vanadio=$conexion->conexion1();
         $cromo=$conexion->conexion2();
-        //Validar contrato clase
         $pensionUsado=$vanadio->query("SELECT codigo_tipo_pension_fk, codigo_externo  
 FROM rhu_contrato 
 left join rhu_tipo_pension on rhu_contrato.codigo_tipo_pension_fk=rhu_tipo_pension.codigo_tipo_pension_pk 
@@ -136,7 +134,6 @@ group by codigo_tipo_pension_fk");
         $conexion = new Conexion();
         $vanadio=$conexion->conexion1();
         $cromo=$conexion->conexion2();
-        //Validar contrato clase
         $saludUsado=$vanadio->query("SELECT codigo_tipo_salud_fk, codigo_externo  
 FROM rhu_contrato 
 left join rhu_tipo_salud on rhu_contrato.codigo_tipo_salud_fk=rhu_tipo_salud.codigo_tipo_salud_pk 
@@ -155,6 +152,121 @@ group by codigo_tipo_salud_fk");
                 $saludDestino=$saludDestino->fetchAll();
                 if(!$saludDestino) {
                     echo "- Salud {$sinCodigoExterno['codigo_externo']} no existe en la base de datos destino<br/>";
+                }
+            }
+        }
+    }
+
+    public function validarEntidadCesantia(){
+        $conexion = new Conexion();
+        $vanadio=$conexion->conexion1();
+        $cromo=$conexion->conexion2();
+        $entidadCesantiaUsado=$vanadio->query("SELECT codigo_entidad_cesantia_fk, codigo_externo  
+FROM rhu_contrato 
+left join rhu_entidad_cesantia on rhu_contrato.codigo_entidad_cesantia_fk=rhu_entidad_cesantia.codigo_entidad_cesantia_pk
+group by codigo_entidad_cesantia_fk");
+
+        $entidadCesantiaUsado->execute();
+        $entidadCesantiaUsado=$entidadCesantiaUsado->fetchAll();
+        foreach ($entidadCesantiaUsado as $sinCodigoExterno){
+            if($sinCodigoExterno['codigo_externo']===null){
+                echo "- Entidad censatia {$sinCodigoExterno['codigo_entidad_cesantia_fk']} no tiene codigo externo y es usado <br/>";
+            } else {
+                $entidadCesantiaDestino=$cromo->query("SELECT codigo_interface
+              FROM rhu_entidad
+              WHERE codigo_interface = '" . $sinCodigoExterno['codigo_externo'] . "' AND
+              ces=1
+              ");
+                $entidadCesantiaDestino->execute();
+                $entidadCesantiaDestino=$entidadCesantiaDestino->fetchAll();
+                if(!$entidadCesantiaDestino) {
+                    echo "- Entidad censatia {$sinCodigoExterno['codigo_externo']} no existe en la base de datos destino<br/>";
+                }
+            }
+        }
+    }
+
+    public function validarEntidadSalud(){
+        $conexion = new Conexion();
+        $vanadio=$conexion->conexion1();
+        $cromo=$conexion->conexion2();
+        $entidadSaludUsado=$vanadio->query("SELECT codigo_entidad_salud_fk, codigo_externo  
+FROM rhu_contrato 
+left join rhu_entidad_salud on rhu_contrato.codigo_entidad_salud_fk=rhu_entidad_salud.codigo_entidad_salud_pk
+group by codigo_entidad_salud_fk");
+
+        $entidadSaludUsado->execute();
+        $entidadSaludUsado=$entidadSaludUsado->fetchAll();
+        foreach ($entidadSaludUsado as $sinCodigoExterno){
+            if($sinCodigoExterno['codigo_externo']===null){
+                echo "- Entidad salud {$sinCodigoExterno['codigo_entidad_salud_fk']} no tiene codigo externo y es usado <br/>";
+            } else {
+                $entidadSaludDestino=$cromo->query("SELECT codigo_interface
+              FROM rhu_entidad
+              WHERE codigo_interface = '" . $sinCodigoExterno['codigo_externo'] . "' AND
+              eps=1
+              ");
+                $entidadSaludDestino->execute();
+                $entidadSaludDestino=$entidadSaludDestino->fetchAll();
+                if(!$entidadSaludDestino) {
+                    echo "- Entidad salud {$sinCodigoExterno['codigo_externo']} no existe en la base de datos destino<br/>";
+                }
+            }
+        }
+    }
+
+    public function validarEntidadPension(){
+        $conexion = new Conexion();
+        $vanadio=$conexion->conexion1();
+        $cromo=$conexion->conexion2();
+        $entidadPensionUsado=$vanadio->query("SELECT codigo_entidad_pension_fk, codigo_externo  
+FROM rhu_contrato 
+left join rhu_entidad_pension on rhu_contrato.codigo_entidad_pension_fk=rhu_entidad_pension.codigo_entidad_pension_pk
+group by codigo_entidad_pension_fk");
+
+        $entidadPensionUsado->execute();
+        $entidadPensionUsado=$entidadPensionUsado->fetchAll();
+        foreach ($entidadPensionUsado as $sinCodigoExterno){
+            if($sinCodigoExterno['codigo_externo']===null){
+                echo "- Entidad pension {$sinCodigoExterno['codigo_entidad_pension_fk']} no tiene codigo externo y es usado <br/>";
+            } else {
+                $entidadPensionDestino=$cromo->query("SELECT codigo_interface
+              FROM rhu_entidad
+              WHERE codigo_interface = '" . $sinCodigoExterno['codigo_externo'] . "' AND
+              pen=1
+              ");
+                $entidadPensionDestino->execute();
+                $entidadPensionDestino=$entidadPensionDestino->fetchAll();
+                if(!$entidadPensionDestino) {
+                    echo "- Entidad pension {$sinCodigoExterno['codigo_externo']} no existe en la base de datos destino<br/>";
+                }
+            }
+        }
+    }
+    public function validarEntidadCaja(){
+        $conexion = new Conexion();
+        $vanadio=$conexion->conexion1();
+        $cromo=$conexion->conexion2();
+        $entidadCajaUsado=$vanadio->query("SELECT codigo_entidad_caja_fk, codigo_externo  
+FROM rhu_contrato 
+left join rhu_entidad_caja on rhu_contrato.codigo_entidad_caja_fk=rhu_entidad_caja.codigo_entidad_caja_pk
+group by codigo_entidad_caja_fk");
+
+        $entidadCajaUsado->execute();
+        $entidadCajaUsado=$entidadCajaUsado->fetchAll();
+        foreach ($entidadCajaUsado as $sinCodigoExterno){
+            if($sinCodigoExterno['codigo_externo']===null){
+                echo "- Entidad caja {$sinCodigoExterno['codigo_entidad_caja_fk']} no tiene codigo externo y es usado <br/>";
+            } else {
+                $entidadCajaDestino=$cromo->query("SELECT codigo_interface
+              FROM rhu_entidad
+              WHERE codigo_interface = '" . $sinCodigoExterno['codigo_externo'] . "' AND
+              ccf=1
+              ");
+                $entidadCajaDestino->execute();
+                $entidadCajaDestino=$entidadCajaDestino->fetchAll();
+                if(!$entidadCajaDestino) {
+                    echo "- Entidad caja {$sinCodigoExterno['codigo_externo']} no existe en la base de datos destino<br/>";
                 }
             }
         }

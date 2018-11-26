@@ -6,7 +6,7 @@
  * Time: 15:02 PM
  */
 
-            require_once('../../Conexion.php');
+require_once('../../Conexion.php');
 class RhuContrato{
 
 
@@ -55,10 +55,10 @@ class RhuContrato{
                 'codigo_subtipo_cotizante_fk', //tabla con referencia (relacion)
                 'salario_integral',
 //                'costo_tipo_fk', //no existe en vanadio o no se conoce el nombre de referecia en vanadio
-//                'codigo_entidad_salud_fk', //tabla con referencia (relacion)
-//                'codigo_entidad_pension_fk', //tabla con referencia (relacion)
-                'codigo_entidad_cesantia_fk',
-//                'codigo_entidad_caja_fk', //tabla con referencia (relacion)
+                'codigo_entidad_salud_externo', //tabla con referencia (relacion)
+                'codigo_entidad_pension_externo', //tabla con referencia (relacion)
+                'codigo_entidad_cesantia_externo',
+                'codigo_entidad_caja_externo', //tabla con referencia (relacion)
                 'codigo_ciudad_contrato_fk',
                 'codigo_ciudad_labora_fk',
 //                'codigo_costo_clase_fk', //no existe en vanadio o no se conoce el nombre de referecia en vanadio
@@ -69,6 +69,14 @@ class RhuContrato{
                 'auxilio_transporte'
 
             );
+
+            $columnasCodigosInterface=[
+                'codigo_entidad_salud_externo', //tabla con referencia (relacion)
+                'codigo_entidad_pension_externo', //tabla con referencia (relacion)
+                'codigo_entidad_cesantia_externo',
+                'codigo_entidad_caja_externo',
+            ];
+
             $totalDatos=$vanadio->query("SELECT COUNT(*) as 'numeroRegistro' FROM rhu_contrato");
             $totalDatos->execute();
             $count=$totalDatos->fetchAll();
@@ -79,7 +87,10 @@ class RhuContrato{
 
                 $count=$count[0]['numeroRegistro'];
             }
-
+            $cromo = $conexion->conexion2();
+            $entidad=$cromo->query("SELECT codigo_interface, codigo_entidad_pk FROM rhu_entidad ");
+            $entidad->execute();
+            $datosEntidad=$entidad->fetchAll();
             while ($aux!==(int)$count) {
                 $limite = $aux + 1000;
                 $datos = $vanadio->query("SELECT
@@ -114,10 +125,10 @@ class RhuContrato{
                     codigo_subtipo_cotizante_fk,
                     salario_integral,
                     /*costo_tipo_fk,*/
-                    /*codigo_entidad_salud_fk,
-                    codigo_entidad_pension_fk,*/
-                    codigo_entidad_cesantia_fk,
-                    /*codigo_entidad_caja_fk,*/
+                    rhu_entidad_salud.codigo_externo as codigo_entidad_salud_externo,
+                    rhu_entidad_pension.codigo_externo as codigo_entidad_pension_externo,
+                    rhu_entidad_cesantia.codigo_externo as codigo_entidad_cesantia_externo,
+                    rhu_entidad_caja.codigo_externo as codigo_entidad_caja_externo,
                     codigo_ciudad_contrato_fk,
                     codigo_ciudad_labora_fk,
                     /*codigo_costo_clase_fk,*/
@@ -126,19 +137,35 @@ class RhuContrato{
                     codigo_centro_trabajo_fk,
                     codigo_sucursal_fk,
                     auxilio_transporte
-                 FROM rhu_contrato 
+                  FROM rhu_contrato 
                   left join rhu_contrato_tipo on rhu_contrato.codigo_contrato_tipo_fk = rhu_contrato_tipo.codigo_contrato_tipo_pk
                   left join rhu_contrato_clase on rhu_contrato_clase.codigo_contrato_clase_pk=rhu_contrato.codigo_contrato_clase_fk
                   left join rhu_clasificacion_riesgo on rhu_clasificacion_riesgo.codigo_clasificacion_riesgo_pk=rhu_contrato.codigo_clasificacion_riesgo_fk
                   left join rhu_tipo_pension on rhu_tipo_pension.codigo_tipo_pension_pk=rhu_contrato.codigo_tipo_pension_fk
                   left join rhu_tipo_salud on rhu_tipo_salud.codigo_tipo_salud_pk=rhu_contrato.codigo_tipo_salud_fk
-                  limit {$aux},{$limite}");
+                  left join rhu_entidad_salud on rhu_entidad_salud.codigo_entidad_salud_pk=rhu_contrato.codigo_entidad_salud_fk
+                  left join rhu_entidad_pension on rhu_entidad_pension.codigo_entidad_pension_pk=rhu_contrato.codigo_entidad_pension_fk
+                  left join rhu_entidad_cesantia on rhu_entidad_cesantia.codigo_entidad_cesantia_pk=rhu_contrato.codigo_entidad_cesantia_fk
+                  left join rhu_entidad_caja on rhu_entidad_caja.codigo_entidad_caja_pk=rhu_contrato.codigo_entidad_caja_fk
+                  limit {$aux},{$limite} ");
                 $value="";
                 foreach($datos as $row) {
                     $aux++;
                     $value="{$value}(";
                     for ($i = 0; $i < count($columnas); $i++) {
-                        if (isset($row[$columnas[$i]])) {
+                        if(in_array($columnas[$i],$columnasCodigosInterface)){
+                            $auxEncontrarCodigoInterface=0;
+                            for ($j=0;$j<count($datosEntidad);$j++){
+                               if( $datosEntidad[$j]['codigo_interface']===$row[$columnas[$i]]){
+                                   $value="{$value}{$datosEntidad[$j]['codigo_entidad_pk']},";
+                                   $auxEncontrarCodigoInterface=1;
+                               }
+                               else if($j==count($datosEntidad)-1 && $auxEncontrarCodigoInterface==0){
+                                   $value="{$value}null,";
+                               }
+                            }
+                        }
+                        else if(isset($row[$columnas[$i]])) {
                             if(is_numeric($row[$columnas[$i]])){
                                 $value="{$value}{$row[$columnas[$i]]},";
                             }
@@ -156,7 +183,6 @@ class RhuContrato{
                 }
                 $value=substr($value,0,-1);
 
-                $cromo = $conexion->conexion2();
                 if($value!=""){
                     $cromo->query("insert into rhu_contrato(
                     codigo_contrato_pk,
@@ -190,10 +216,10 @@ class RhuContrato{
                     codigo_subtipo_cotizante_fk,
                     salario_integral,
                     /*costo_tipo_fk,*/
-                    /*codigo_entidad_salud_fk,
-                    codigo_entidad_pension_fk,*/
+                    codigo_entidad_salud_fk,
+                    codigo_entidad_pension_fk,
                     codigo_entidad_cesantia_fk,
-                    /*codigo_entidad_caja_fk,*/
+                    codigo_entidad_caja_fk,
                     codigo_ciudad_contrato_fk,
                     codigo_ciudad_labora_fk,
                     /*codigo_costo_clase_fk,*/
