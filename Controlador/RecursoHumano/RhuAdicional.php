@@ -122,6 +122,10 @@ class RhuAdicional{
             }
             $vanadio = $conexion->cerrarConexion();
             $cromo = $conexion->cerrarConexion();
+
+            $cromo = $conexion->conexion2();
+            $cromo->query("update rhu_adicional set aplica_nomina=1 where aplica_cesantia=0 and aplica_prima=0");
+
             echo "ok";
             die();
         }

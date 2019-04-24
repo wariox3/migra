@@ -34,6 +34,12 @@
         <a href="RhuAdicional.php">Adicional</a>
     </li>
     <li >
+        <a href="RhuCreditoTipo.php">Credito tipo</a>
+    </li>
+    <li >
+        <a href="RhuCredito.php">Credito</a>
+    </li>
+    <li >
         <a href="RhuPago.php">Pago</a>
     </li>
     <li >
@@ -87,6 +93,14 @@
         </td>
         <td>
             Contrato, Empleado, Concepto
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Credito
+        </td>
+        <td>
+            Empleado
         </td>
     </tr>
     <tr>
