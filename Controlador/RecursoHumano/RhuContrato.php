@@ -65,7 +65,6 @@ class RhuContrato{
 //                'codigo_costo_grupo_fk', //no existe en vanadio o no se conoce el nombre de referecia en vanadio
 //                'codigo_costo_tipo_fk', //no existe en vanadio o no se conoce el nombre de referecia en vanadio
                 'codigo_centro_trabajo_fk',
-                'codigo_sucursal_fk',
                 'auxilio_transporte'
 
             );
@@ -135,7 +134,6 @@ class RhuContrato{
                     /*codigo_costo_grupo_fk,*/
                     /*codigo_costo_tipo_fk,*/
                     codigo_centro_trabajo_fk,
-                    codigo_sucursal_fk,
                     auxilio_transporte
                   FROM rhu_contrato 
                   left join rhu_contrato_tipo on rhu_contrato.codigo_contrato_tipo_fk = rhu_contrato_tipo.codigo_contrato_tipo_pk
@@ -226,7 +224,6 @@ class RhuContrato{
                     /*codigo_costo_grupo_fk,*/
                     /*codigo_costo_tipo_fk,*/
                     codigo_centro_trabajo_fk,
-                    codigo_sucursal_fk,
                     auxilio_transporte
                 )
                 values {$value}");
