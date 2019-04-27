@@ -40,6 +40,9 @@
         <a href="RhuCredito.php">Credito</a>
     </li>
     <li >
+        <a href="RhuVacacion.php">Vacacion</a>
+    </li>
+    <li >
         <a href="RhuPago.php">Pago</a>
     </li>
     <li >
