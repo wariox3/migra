@@ -35,7 +35,9 @@ class RhuCredito{
                 'aplicar_cuota_cesantia',
                 'validar_cuotas',
                 'estado_suspendido',
-                'saldo'
+                'saldo',
+                'estado_pagado',
+                'codigo_credito_pago_tipo_externo'
             );
             $totalDatos=$vanadio->query("SELECT COUNT(*) as 'numeroRegistro' FROM rhu_credito");
             $totalDatos->execute();
@@ -70,8 +72,12 @@ class RhuCredito{
                         aplicar_cuota_cesantia,
                         validar_cuotas,
                         estado_suspendido,
-                        saldo
-                 FROM rhu_credito limit {$aux},{$limite}");
+                        saldo,
+                        estado_pagado,
+                        rhu_credito_tipo_pago.codigo_externo as codigo_credito_pago_tipo_externo
+                 FROM rhu_credito 
+                 left join rhu_credito_tipo_pago ON rhu_credito.codigo_credito_tipo_pago_fk = rhu_credito_tipo_pago.codigo_credito_tipo_pago_pk 
+                 limit {$aux},{$limite}");
                 $value="";
                 foreach($datos as $row) {
                     $aux++;
@@ -118,7 +124,9 @@ class RhuCredito{
                         aplicar_cuota_cesantia,
                         validar_cuotas,
                         estado_suspendido,
-                        vr_saldo
+                        vr_saldo,
+                        estado_pagado,
+                        codigo_credito_pago_tipo_fk
                 )
                 values {$value}");
                 }

@@ -30,7 +30,7 @@ class RhuContrato{
                 'codigo_clasificacion_riesgo_externo',
 //                'codigo_contrato_motivo_fk', //no existe en vanadio o no se conoce el nombre de referecia en vanadio
                 'fecha',
-//                'codigo_tiempo_fk', //no existe en vanadio o no se conoce el nombre de referecia en vanadio
+                'codigo_tipo_tiempo_externo',
                 'factor_horas_dia',
                 'codigo_tipo_pension_externo',
                 'codigo_tipo_salud_externo',
@@ -41,6 +41,7 @@ class RhuContrato{
 //                'codigo_cargo_fk',//tabla con referencia (relacion)
                 'cargo_descripcion',
                 'vr_salario',
+                'vr_salario_pago',
 //                'vr_adicional', //no existe en vanadio o no se conoce el nombre de referecia en vanadio
 //                'vr_adicional_prestacional', //no existe en vanadio o no se conoce el nombre de referecia en vanadio
                 'estado_terminado',
@@ -99,8 +100,8 @@ class RhuContrato{
                     rhu_clasificacion_riesgo.codigo_externo as codigo_clasificacion_riesgo_externo,
                     /*codigo_contrato_motivo_fk,*/
                     fecha,
-                    /*codigo_tiempo_fk,*/
-                    factor_horas_dia,
+                    rhu_tipo_tiempo.codigo_externo as codigo_tipo_tiempo_externo,
+                    rhu_contrato.factor_horas_dia,
                     rhu_tipo_pension.codigo_externo as codigo_tipo_pension_externo,
                     rhu_tipo_salud.codigo_externo as codigo_tipo_salud_externo,
                     codigo_empleado_fk,
@@ -110,6 +111,7 @@ class RhuContrato{
                     /*codigo_cargo_fk,*/
                     cargo_descripcion,
                     vr_salario,
+                    vr_salario_pago,
                     /*vr_adicional,*/
                     /*vr_adicional_prestacional,*/
                     estado_terminado,
@@ -145,6 +147,7 @@ class RhuContrato{
                   left join rhu_entidad_pension on rhu_entidad_pension.codigo_entidad_pension_pk=rhu_contrato.codigo_entidad_pension_fk
                   left join rhu_entidad_cesantia on rhu_entidad_cesantia.codigo_entidad_cesantia_pk=rhu_contrato.codigo_entidad_cesantia_fk
                   left join rhu_entidad_caja on rhu_entidad_caja.codigo_entidad_caja_pk=rhu_contrato.codigo_entidad_caja_fk
+                  left join rhu_tipo_tiempo on rhu_contrato.codigo_tipo_tiempo_fk=rhu_tipo_tiempo.codigo_tipo_tiempo_pk
                   limit {$aux},{$limite} ");
                 $value="";
                 foreach($datos as $row) {
@@ -189,7 +192,7 @@ class RhuContrato{
                     codigo_clasificacion_riesgo_fk,
                     /*codigo_contrato_motivo_fk,*/
                     fecha,
-                    /*codigo_tiempo_fk,*/
+                    codigo_tiempo_fk,
                     factor_horas_dia,
                     codigo_pension_fk,
                     codigo_salud_fk,
@@ -200,6 +203,7 @@ class RhuContrato{
                     /*codigo_cargo_fk,*/
                     cargo_descripcion,
                     vr_salario,
+                    vr_salario_pago,
                     /*vr_adicional,*/
                     /*vr_adicional_prestacional,*/
                     estado_terminado,

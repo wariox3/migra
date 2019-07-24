@@ -24,7 +24,7 @@ class RhuConcepto{
             $columnas=array(
                 'codigo_pago_concepto_pk',
                 'nombre',
-//                'porcentaje', //no aparece o tiene un nombre distinto
+                'por_porcentaje',
                 'genera_ingreso_base_prestacion',
                 'genera_ingreso_base_cotizacion',
                 'operacion',
@@ -59,7 +59,7 @@ class RhuConcepto{
                 $datos = $vanadio->query("SELECT
                 codigo_pago_concepto_pk,
                 nombre,
-                /*porcentaje,*/ 
+                por_porcentaje, 
                 genera_ingreso_base_prestacion,
                 genera_ingreso_base_cotizacion,
                 operacion,
@@ -106,7 +106,7 @@ class RhuConcepto{
                     $cromo->query("insert into rhu_concepto(
                 codigo_concepto_pk,
                 nombre,
-                /*porcentaje,*/
+                porcentaje,
                 genera_ingreso_base_prestacion,
                 genera_ingreso_base_cotizacion,
                 operacion,

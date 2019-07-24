@@ -20,7 +20,18 @@ class RhuVacacion{
                 'fecha_hasta_perioro',
                 'fecha_desde_disfrute',
                 'fecha_hasta_disfrute',
-                'dias_disfrutados'
+                'dias_disfrutados',
+                'dias_disfrutados_reales',
+                'vr_ibc_promedio',
+                'vr_salud',
+                'vr_pension',
+                'vr_fondo_solidaridad',
+                'vr_ibc',
+                'vr_deduccion',
+                'vr_bonificacion',
+                'vr_vacacion_disfrute',
+                'vr_vacacion_dinero',
+                'vr_vacacion_total'
             );
             $totalDatos=$vanadio->query("SELECT COUNT(*) as 'numeroRegistro' FROM rhu_vacacion");
             $totalDatos->execute();
@@ -44,7 +55,18 @@ class RhuVacacion{
                         fecha_hasta_periodo,
                         fecha_desde_disfrute,
                         fecha_hasta_disfrute,
-                        dias_disfrutados
+                        dias_disfrutados,
+                        dias_disfrutados_reales,
+                        vr_ibc_promedio,
+                        vr_salud,
+                        vr_pension,
+                        vr_fondo_solidaridad,
+                        vr_ibc,
+                        vr_deduccion,
+                        vr_bonificacion,
+                        vr_vacacion_disfrute,
+                        vr_vacacion_dinero,
+                        vr_vacacion_total
 
                  FROM rhu_vacacion limit {$aux},{$limite}");
                 $value="";
@@ -82,7 +104,18 @@ class RhuVacacion{
                         fecha_hasta_periodo,
                         fecha_desde_disfrute,
                         fecha_hasta_disfrute,
-                        dias_disfrutados
+                        dias_disfrutados,
+                        dias_disfrutados_reales,
+                        vr_ibc_promedio,
+                        vr_salud,
+                        vr_pension,
+                        vr_fondo_solidaridad,
+                        vr_ibc,
+                        vr_deduccion,
+                        vr_bonificacion,                        
+                        vr_disfrute,
+                        vr_dinero,
+                        vr_total
                 )
                 values {$value}");
                 }
