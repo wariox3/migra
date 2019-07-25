@@ -1,5 +1,5 @@
 
-<ul >
+<ul>
     <li >
         <a href="Vista/General/index.php">General</a>
     </li>
@@ -7,9 +7,6 @@
         <a href="Vista/RecursoHumano/index.php" >Recurso Humano</a>
     </li>
     <li >
-        <a href="#">Otras opciones</a>
-    </li>
-    <li >
-        <a href="#">Otras opciones</a>
+        <a href="Vista/Turno/index.php">Turno</a>
     </li>
 </ul>
