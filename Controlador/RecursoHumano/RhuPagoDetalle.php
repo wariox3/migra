@@ -18,6 +18,8 @@ class RhuPagoDetalle{
 
     public function migrarPagoDetalle(){
         try{
+            set_time_limit(0);
+            ini_set("memory_limit", -1);
             require_once('../../Conexion.php');
             $conexion = new Conexion();
             $vanadio=$conexion->conexion1();
@@ -25,7 +27,7 @@ class RhuPagoDetalle{
                 'codigo_pago_detalle_pk',
                 'codigo_pago_fk',
                 'codigo_pago_concepto_fk',
-//                'codigo_credito_fk', //referencia
+                'codigo_credito_fk',
                 'vr_pago',
                 'operacion',
                 'vr_pago_operado',
@@ -56,7 +58,7 @@ class RhuPagoDetalle{
                 codigo_pago_detalle_pk,
                 codigo_pago_fk,
                 codigo_pago_concepto_fk,
-                /*codigo_credito_fk,*/
+                codigo_credito_fk,
                 vr_pago,
                 operacion,
                 vr_pago_operado,
@@ -99,7 +101,7 @@ class RhuPagoDetalle{
                 codigo_pago_detalle_pk,
                 codigo_pago_fk,
                 codigo_concepto_fk,
-                /*codigo_credito_fk,*/
+                codigo_credito_fk,
                 vr_pago,
                 operacion,
                 vr_pago_operado,

@@ -13,15 +13,21 @@ class RhuVacacion{
             $vanadio=$conexion->conexion1();
             $columnas=array(
                 'codigo_vacacion_pk',
+                'numero',
                 'codigo_empleado_fk',
                 'codigo_contrato_fk',
+                'codigo_centro_costo_fk',
                 'fecha',
                 'fecha_desde_periodo',
-                'fecha_hasta_perioro',
+                'fecha_hasta_periodo',
                 'fecha_desde_disfrute',
                 'fecha_hasta_disfrute',
+                'fecha_contabilidad',
+                'fecha_inicio_labor',
                 'dias_disfrutados',
                 'dias_disfrutados_reales',
+                'dias_pagados',
+                'dias_vacaciones',
                 'vr_ibc_promedio',
                 'vr_salud',
                 'vr_pension',
@@ -31,7 +37,10 @@ class RhuVacacion{
                 'vr_bonificacion',
                 'vr_vacacion_disfrute',
                 'vr_vacacion_dinero',
-                'vr_vacacion_total'
+                'vr_vacacion',
+                'vr_salario_actual',
+                'vr_salario_promedio',
+                'vr_vacacion_bruto'
             );
             $totalDatos=$vanadio->query("SELECT COUNT(*) as 'numeroRegistro' FROM rhu_vacacion");
             $totalDatos->execute();
@@ -48,15 +57,21 @@ class RhuVacacion{
                 $limite = $aux + 1000;
                 $datos = $vanadio->query("SELECT
                         codigo_vacacion_pk,
+                        numero,
                         codigo_empleado_fk,                        
                         codigo_contrato_fk,
+                        codigo_centro_costo_fk,
                         fecha,
                         fecha_desde_periodo,
                         fecha_hasta_periodo,
                         fecha_desde_disfrute,
                         fecha_hasta_disfrute,
+                        fecha_contabilidad,
+                        fecha_inicio_labor,
                         dias_disfrutados,
                         dias_disfrutados_reales,
+                        dias_pagados,
+                        dias_vacaciones,
                         vr_ibc_promedio,
                         vr_salud,
                         vr_pension,
@@ -66,7 +81,10 @@ class RhuVacacion{
                         vr_bonificacion,
                         vr_vacacion_disfrute,
                         vr_vacacion_dinero,
-                        vr_vacacion_total
+                        vr_vacacion,
+                        vr_salario_actual,
+                        vr_salario_promedio,
+                        vr_vacacion_bruto
 
                  FROM rhu_vacacion limit {$aux},{$limite}");
                 $value="";
@@ -97,15 +115,21 @@ class RhuVacacion{
                 if($value!=""){
                     $cromo->query("insert into rhu_vacacion(
                         codigo_vacacion_pk,
+                        numero,
                         codigo_empleado_fk,
                         codigo_contrato_fk,
+                        codigo_grupo_fk,
                         fecha,
                         fecha_desde_periodo,
                         fecha_hasta_periodo,
                         fecha_desde_disfrute,
                         fecha_hasta_disfrute,
+                        fecha_contabilidad,
+                        fecha_inicio_labor,
                         dias_disfrutados,
                         dias_disfrutados_reales,
+                        dias_pagados,
+                        dias,
                         vr_ibc_promedio,
                         vr_salud,
                         vr_pension,
@@ -115,7 +139,10 @@ class RhuVacacion{
                         vr_bonificacion,                        
                         vr_disfrute,
                         vr_dinero,
-                        vr_total
+                        vr_total,
+                        vr_salario_actual,
+                        vr_salario_promedio,
+                        vr_bruto
                 )
                 values {$value}");
                 }

@@ -23,7 +23,8 @@ class RhuPago{
             $vanadio=$conexion->conexion1();
             $columnas=array(
                 'codigo_pago_pk',
-//                'codigo_pago_tipo_fk', //tiene referencias (relacion)
+                'codigo_pago_tipo_externo',
+                'codigo_centro_costo_fk',
 //                'codigo_entidad_salud_fk', //tiene referencias (relacion)
 //                'codigo_entidad_pension_fk', //tiene referencias (relacion)
                 'codigo_periodo_pago_fk',
@@ -59,7 +60,8 @@ class RhuPago{
                 $limite = $aux + 1000;
                 $datos = $vanadio->query("SELECT
                 codigo_pago_pk,
-                /*codigo_pago_tipo_fk,*/
+                rhu_pago_tipo.codigo_externo as codigo_pago_tipo_externo,
+                codigo_centro_costo_fk,
                 /*codigo_entidad_salud_fk,
                 codigo_entidad_pension_fk,*/
                 codigo_periodo_pago_fk,
@@ -79,7 +81,9 @@ class RhuPago{
                 estado_anulado,
                 comentarios,
                 codigo_usuario
-                 FROM rhu_pago limit {$aux},{$limite}");
+                 FROM rhu_pago  
+                 left join rhu_pago_tipo on rhu_pago.codigo_pago_tipo_fk = rhu_pago_tipo.codigo_pago_tipo_pk 
+                 limit {$aux},{$limite}");
                 $value="";
                 foreach($datos as $row) {
                     $aux++;
@@ -108,7 +112,8 @@ class RhuPago{
                 if($value!=""){
                     $cromo->query("insert into rhu_pago(
                 codigo_pago_pk,
-                /*codigo_pago_tipo_fk,*/
+                codigo_pago_tipo_fk,
+                codigo_grupo_fk,
                 /*codigo_entidad_salud_fk,
                 codigo_entidad_pension_fk,*/
                 codigo_periodo_fk,
