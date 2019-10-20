@@ -30,24 +30,18 @@
     <li >
         <a href="RhuConcepto.php">Concepto</a>
     </li>
-    <li >
-        <a href="RhuAdicional.php">Adicional</a>
-    </li>
-    <li >
-        <a href="RhuCreditoTipo.php">Credito tipo</a>
-    </li>
-    <li >
-        <a href="RhuCredito.php">Credito</a>
-    </li>
-    <li >
-        <a href="RhuVacacion.php">Vacacion</a>
-    </li>
-    <li >
-        <a href="RhuPago.php">Pago</a>
-    </li>
-    <li >
-        <a href="RhuPagoDetalle.php">Pago detalle</a>
-    </li>
+    <li><a href="RhuAdicional.php">Adicional</a></li>
+    <li><a href="RhuCreditoTipo.php">Credito tipo</a></li>
+    <li><a href="RhuCredito.php">Credito</a></li>
+    <li><a href="RhuCreditoPago.php">Credito pago</a></li>
+    <li><a href="RhuVacacion.php">Vacacion</a></li>
+    <li><a href="RhuPago.php">Pago</a></li>
+    <li><a href="RhuPagoDetalle.php">Pago detalle</a></li>
+    <li><a href="RhuIncapacidadDiagnostico.php">Incapacidad diagnostico</a></li>
+    <li><a href="RhuIncapacidad.php">Incapacidad</a></li>
+    <li><a href="RhuEmbargo.php">Embargo</a></li>
+    <li><a href="RhuLicenciaTipo.php">Licencia tipo</a></li>
+    <li><a href="RhuLicencia.php">Licencia</a></li>
 </ul>
 <table>
     <tr>
