@@ -85,7 +85,6 @@ class RhuVacacion{
                         vr_salario_actual,
                         vr_salario_promedio,
                         vr_vacacion_bruto
-
                  FROM rhu_vacacion limit {$aux},{$limite}");
                 $value="";
                 foreach($datos as $row) {
